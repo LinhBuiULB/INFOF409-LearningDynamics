@@ -61,7 +61,7 @@ The different actions of a player $i \in \{1,2\}$ are denoted by the set $\mathc
 $D$ the dove action. Moreover, to denote the different actions payoff, we need an utility function of those actions. This utility function is then written  : 
 $$ u_{i}(a_{i}, a_{-i}) $$ such that $a_{i}$ is an action of player $i$ and $a_{-i}$ is the action of the other player where player $i$ choses $a_{i}$. For instance,  $ u_{1}(Hawk, Dove) = V $ and $ u_{2}(Hawk, Dove) = 0 $). \\
 
-In the case of mixed strategies, the notion of the \textbf{expected value} of a payoff function is used and is written in the general case :
+In the case of mixed strategies, the notion of \textbf{expected value} of a payoff function is used and is written in the general case :
 $$ U(p_{1}, ... , p_{k }) = p_{k} u(a_{k})$$ where $p_{k}$ is the probability that the other player chose the action $a_{k}$. 
 In the case of the Hawk-Dove game, the expected value formula would be written such that $k=2$ because it exists only 2 actions, i.e. :  $$ U(p_{1}, p_{2}) = p_{1} u(a_{1}) + p_{2} u(a_{2})$$
 
@@ -73,37 +73,86 @@ Furthermore, to find Nash equilibria, best responses have to be found. Those one
 \noindent
 \textit{ Find all the (mixed strategy) Nash equilibria of this game. How do the results change when the order of the parameters V, D and T is changed (V>D, D>T, etc.)?}
 
-\subsubsection{First case : $V>D$ and $T>\frac{V}{2}$} 
+\subsubsection*{Sign of V, D and T} 
+Before starting the analysis, we should remind that $V$ and $D$ are representing respectively the fitness value of winning resources in fight and costs of injury thereby it would not make sense having negative values. $V$ and $D$ are then always positive values. Same for $T$ which is the cost of wasting time. The time wasted is obviously always a positive value. To summarize, 
+$$ V, D, T \ge 0 $$  
 
-In the first case, we consider that $V>D$ and $T>\frac{V}{2}$. Therefore, we know that the value of $\frac{V-D}{2}$ will be positive and the value of $\frac{V}{2}-T \le 0$. In this case, the choice of both players are quiet easy. 
 
-%the payoff matrix can be modified as illustrated in \autoref{table:payoffMatrix-case1}. 
+\subsubsection{First case : $V>D$} 
+
+In the first case, we consider that $V>D$. Therefore, we know that the value of $u_{i}(Hawk, Hawk) = \frac{V-D}{2}$ will be strictly positive. In this case, the choice of both players are quiet easy. As illustrated in \autoref{table:NE-case1}, the Nash equilibrium is $(Hawk, Hawk) \in \mathcal{A}$. Indeed, both players are chosing $Hawk$ because if one of them is switching to $Dove$ then $u_{i}(Hawk,Hawk)$ which was a positive value becomes $u_{1}(Dove,Hawk)$ for player 1 or $u_{2}(Hawk,Dove)$ for player 2 which equals zero. Thus, they obviously prefer to pick $(Hawk,Hawk)$. 
 
 \begin{center}
 \begin{tabular}{|l|r|r|}
   \hline
   			   & Hawk & Dove \\
   \hline
-  		   & \hspace{1cm} $\frac{V-D}{2}$ & 0 \\
-  	Hawk &	\multicolumn{1}{|l|}{$\frac{V-D}{2}$}		& 	\multicolumn{1}{|l|}{$V$ }		\\
+  		   & \hspace{1cm} \colorbox{green}{$\frac{V-D}{2}>0$} & 0 \\
+  	Hawk &	\multicolumn{1}{|l|}{\colorbox{pink}{$\frac{V-D}{2}>0$}}		& 	\multicolumn{1}{|l|}{\colorbox{pink}{$V$}}		\\
   \hline
-    		   & \multicolumn{1}{|r|}{$V$} & \hspace{1cm} $\frac{V}{2}-T$  \\
+    		   & \multicolumn{1}{|r|}{\colorbox{green}{$V$}} & \hspace{1cm} $\frac{V}{2}-T$  \\
   Dove &	\multicolumn{1}{|l|}{0}		& 	\multicolumn{1}{|l|}{$\frac{V}{2}-T$}		\\
   \hline
 \end{tabular}
-\captionof{table}{Modified payoff matrix of the H-D game for case 1}
-\label{table:payoffMatrix-case1}
+\captionof{table}{Nash equilibrium/Best responses in case 1}
+\label{table:NE-case1}
 \end{center}
 
-\subsubsection{Second case : $V<D$}
+\subsubsection{Second case : $V=D$}
+The second case considers the same value for $V$ and $D$ which means that $\frac{V-D}{2} = 0$. The \autoref{table:NE-case2} shows the Nash equilibria for that case. We can see that there doesn't exist only one Nash equilibrium, but three. $(Hawk,Hawk)$ stays a Nash equilibrium in this case, but $(Dove,Hawk)$ and $(Hawk,Dove)$ are now also Nash equilibria. In other words, if player 2 is chosing $Hawk$, the best response to it is whether $(Hawk,Hawk)$ or $(Dove,Hawk)$ because $u_{1}(Hawk,Hawk)=u_{1}(Dove,Hawk)=0$. On the other hand, if player 2 is chosing $Dove$, the best response is only $(Hawk,Dove)$ since $u_{1}(Hawk,Dove)>u_{1}(Dove,Dove) \equiv V > \frac{V}{2}-T$. By symmetry, it is also valid for the opposite case where player 1's choice is known, so that the best  responses are (symmetrically) equivalent which means $(Hawk,Hawk)$,$(Hawk,Dove)$ and $(Dove, Hawk)$ are the best responses for player 2. 
 
-\subsubsection{Third case : }
+\begin{center}
+\begin{tabular}{|l|r|r|}
+  \hline
+  			   & Hawk & Dove \\
+  \hline
+  		   & \hspace{1cm} \colorbox{green}{$\frac{V-D}{2}=0$} & \colorbox{green}{0} \\
+  	Hawk &	\multicolumn{1}{|l|}{\colorbox{pink}{$\frac{V-D}{2}=0$}}		& 	\multicolumn{1}{|l|}{\colorbox{pink}{$V$}}		\\
+  \hline
+    		   & \multicolumn{1}{|r|}{\colorbox{green}{$V$}} & \hspace{1cm} $\frac{V}{2}-T$  \\
+  Dove &	\multicolumn{1}{|l|}{\colorbox{pink}{0}}		& 	\multicolumn{1}{|l|}{$\frac{V}{2}-T$}		\\
+  \hline
+\end{tabular}
+\captionof{table}{Nash equilibria/Best responses in case 2}
+\label{table:NE-case2}
+\end{center}
 
-\subsubsection{Fourth case : }
+\subsubsection{Third case : $V<D$}
+Finally, we are now considering that $V<D$. Therefore, $u_{i}(Hawk, Hawk) = \frac{V-D}{2}$ is now strictly a negative value. 
+% ...
 
+\begin{center}
+\begin{tabular}{|l|r|r|}
+  \hline
+  			   & Hawk & Dove \\
+  \hline
+  		   & \hspace{1cm} $\frac{V-D}{2}<0$ & \colorbox{green}{0} \\
+  	Hawk &	\multicolumn{1}{|l|}{$\frac{V-D}{2}<0$}		& 	\multicolumn{1}{|l|}{\colorbox{pink}{$V$}}		\\
+  \hline
+    		   & \multicolumn{1}{|r|}{\colorbox{green}{$V$}} & \hspace{1cm} $\frac{V}{2}-T$  \\
+  Dove &	\multicolumn{1}{|l|}{\colorbox{pink}{0}}		& 	\multicolumn{1}{|l|}{$\frac{V}{2}-T$}		\\
+  \hline
+\end{tabular}
+\captionof{table}{Nash equilibria/Best responses in case 3}
+\label{table:NE-case3}
+\end{center}
+
+\subsubsection{Mixed strategy}
+% a faire demain
+
+\subsubsection{What about the value of $T$ ?}
+% a faire demain 
+
+\subsection{Question 2 - Mixed strategy drawing}
+% a faire demain (au brouillon)
+
+\subsubsection*{Statement}
+
+\textit{Under which conditions does displaying become more beneficial than escalating? Draw the set of all mixed strategies.} 
 
 \section{Which social dilemma ?}
 
+%commencer à lire les slides sur ça demain
 
 \section{Games in finite population}
 
