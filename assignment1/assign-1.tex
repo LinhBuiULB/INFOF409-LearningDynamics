@@ -153,7 +153,7 @@ The \autoref{table:NE-case3} is showing the Nash equilibria for this case. Compa
 \subsubsection{What about the value of $T$ ?}
 As you can see, the different cases are not depending of the value of $T$. In each case, $(Dove, Dove)$ will never be a Nash equilibrium since that $\frac{V}{2}-T$ will always be smaller than $V$ (as reminder, $V$ and $T > 0$), then $(Dove,Dove)$ will never be the best response.  
 
-\subsubsection{Mixed strategy}
+\subsubsection{Mixed strategy} \label{sec:mixedStrat}
 To find the mixed strategy Nash equilibrium, we have to take into account the probabilities $p$ and $q$ which are respectively the probabilities of playing a certain action for player 1 and player 2. The general probabilities of a 2x2 game's matrix is shown in the \autoref{fig:proba-2x2}. 
 
 \begin{figure}[h]
@@ -197,20 +197,86 @@ p &= \frac{V+2T}{D+2T}
 
 which means that : 
 \begin{flalign}
-p = q = \frac{V+2T}{D+2T}
+p = q = \frac{V+2T}{D+2T} \in [0,1] 
 \end{flalign}
 
+Therefore, for player one \textcolor{blue}{(two)}, when :
+\begin{itemize}
+\item $q \textcolor{blue}{(p)} > \frac{V+2T}{D+2T}$, the best response set is {$Hawk$} or $p \textcolor{blue}{(q)}=1$
+\item $q \textcolor{blue}{(p)} = \frac{V+2T}{D+2T}$, the best response set is the set of all $p \textcolor{blue}{(q)}$ values in [0,1]
+\item $q \textcolor{blue}{(p)} < \frac{V+2T}{D+2T}$, the best response set is {$Dove$} or $p \textcolor{blue}{(q)} =0 $
+\end{itemize}
 
 \subsection{Question 2 - Mixed strategy drawing}
-% a faire demain (au brouillon)
 
 \subsubsection*{Statement}
 
 \textit{Under which conditions does displaying become more beneficial than escalating? Draw the set of all mixed strategies.} 
 
+\subsubsection*{Graph of all mixed strategies}
+
+Based on the calculations of probabilities $p$ and $q$ in the \autoref{sec:mixedStrat}, the graph of all mixed strategies for the Hawk-Dove game is presented in the \autoref{fig:HD-MixedStrat-Graph}. The green lines are the set of player 1's best mixed strategies while the red ones are the set of player 2's best mixed strategies. The blue circles are the mixed strategies Nash equilibria of the game. Thus, we have three possible Nash equilibria that are defined by the sets $\{(1,0);(1,0)\}, \{(0,1),(0,1)\}$ and $  \{(\frac{V+2T}{D+2T},\frac{V+2T}{D+2T}),(\frac{V+2T}{D+2T},\frac{V+2T}{D+2T})\}$.  
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.35]{figures/HD-MixedStrat-Graph.png}
+  \caption{Mixed strategies graph of the Hawk-Dove game}
+  \label{fig:HD-MixedStrat-Graph}
+\end{figure}
+
+\textbf{Remark} Note that $\frac{V+2T}{D+2T}$ has to be a value between 0 and 1 otherwise it wouldn't be a valid probability. Therefore, to respect this condition, necessarily $V \le D $. \\
+
+To conclude, as calculated in the \autoref{sec:mixedStrat} and represented in the \autoref{fig:HD-MixedStrat-Graph}, if a player $i$ plays $Hawk$ with a probability $ >  \frac{V+2T}{D+2T}$ then the opponent player would play $Hawk$ because the expected value for playing $Hawk$ is higher than the expected value of playing $Dove$. Similarly, playing $Dove$ is then an optimal choice when the player $i$ chooses $Hawk$ with a probability $ < \frac{V+2T}{D+2T}$.
+
+\newpage
 \section{Which social dilemma ?}
 
-%commencer à lire les slides sur ça demain
+\subsubsection*{Statement}
+
+\textit{Player A knows he’s	confronted with	one	of three social	dilemma’s; a prisoner’s	
+dilemma, a snowdrift game or stag-hunt game	(see above). In	each game he needs to decide	whether	to cooperate (C) or	defect (D),	yet	he is not sure in which	he actually	is.		He’s sure that each	game is	equally	likely.	The	other player, player B, knows in which	game he’s playing. Determine the pure Nash equilibria using	the	Bayesian game analysis	discussed in the course.} 
+
+\subsubsection*{Data (payoff matrix) of each game}
+
+The payoff matrix of each game is given in the statement and is taken again in the \autoref{fig:matrix-ex2}.  
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.6]{figures/matrix-ex2.png}
+  \caption{Payoff matrices of the prisonner's dilemma, stag-hunt and snowdrift game}
+  \label{fig:matrix-ex2}
+\end{figure}
+
+\subsubsection*{Resolution}
+The problem presented here is a \textit{Bayesian} game problem where a player A doesn't know which game will he play while the second player B knows it. For all cases, the player A has the choice between cooperating (C) or defecting (D). To find the Nash equilibria in such a problem, the first thing to do is to enumerate all the possibles combinations of player A's choice in each game. Let's define the set of all player $i$'s action's $\mathcal{A}_{i}$. In that case, $\mathcal{A}_{A}$ will then take those values : $\mathcal{A}_{A} = \{(C,C,C), (C,C,D), (C,D,C), (D,C,C), (C,D,D), (D,C,D), (D,D,C), (D,D,D)\}$. Concerning $\mathcal{A}_{B}$, player B has only two choices because he knows in which game he's playing, so it's simple as $\mathcal{A}_{B} = \{C,D\}$.\\
+
+We know have all the possible actions for both player, the next step is calculating the payoff values for each combinations between an action of player A and player B. To do that, we represent $\mathcal{A}_{A}$ in the columns of the matrix and $\mathcal{A}_{B}$ in the lines of the matrix. Moreover, we know that each game is equally likely which means that every game has a probability of $\frac{1}{3}$ to be played by player A. \autoref{table:payoffMatrix-bayesian} is presenting the payoff matrix of player A for the current approached Bayesian problem. Note that the payoff values are multiplied by 3 to avoid fractions to make the matrix more clear. \\
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+  \hline
+  			   & CCC & CCD & CDC & DCC & CDD & DCD & DDC & DDD \\
+  \hline
+  C & 9 & 8 & 4 & 7 & 3 & 6 & 2 & 1 \\
+  \hline
+  D & 12 & 7 & 11 & 8 & 6 & 3 & 7 & 2 \\
+  \hline
+\end{tabular}
+\captionof{table}{Payoff matrix of player A for the Bayesian game problem}
+\label{table:payoffMatrix-bayesian}
+\end{center}
+
+Let's now evaluate the best responses for player A (thanks to the matrix just shown above) and for player B. To find a Nash equilibrium, the best responses of both players should match. Best responses are illustrated in \autoref{fig:BR-Bayesian} as well as the matched ones which mean the pure Nash equilibria of the problem. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.35]{figures/BR-Bayesian.png}
+  \caption{Nash equilibria and best responses of the problem "Which social dilemma?" -- 
+  the best responses for player A are highlighted in \colorbox{pink}{red}, the player B's ones are highlighted in \colorbox{green}{green}. The Nash equilibria are brought out in blue and cyan. }
+  \label{fig:BR-Bayesian}
+\end{figure}
+
+To conclude, there exists 2 pure Nash equilibria in this problem. The first one is $(C, DCD)$ (i.e player A cooperating in the second game only while player B is cooperating) and the second one is $(D, DDC)$ (i.e player B cooperating in the last game only while player B is defecting). 
 
 \section{Games in finite population}
 
