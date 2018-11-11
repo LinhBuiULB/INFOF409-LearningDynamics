@@ -12,6 +12,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathtools}
+\usepackage{slashbox}
+
 
 \usepackage{caption}
 \usepackage[hidelinks]{hyperref}
@@ -37,6 +39,9 @@
 
 \maketitle
 
+\tableofcontents
+
+\newpage
 \section{The Hawk-Dove game}
 
 \subsection*{Conventions and notations}
@@ -280,5 +285,202 @@ To conclude, there exists 2 pure Nash equilibria in this problem. The first one 
 
 \section{Games in finite population}
 
+\subsection*{Reminder of notations}
+First, let's recap all the notations which will be used further. Denote by 
+\begin{itemize}
+\item $Z$, the size of the population
+\item $m$, the number of rounds of the prisoner's dilemma 
+\item $p_{ij}$, the \textit{fermi} function which $i$ is an individual and $j$ a population
+\item $\beta$, the intensity of selection
+\item $\{C,D,TFT,RANDOM\}$, respectively "always plays C", "always plays D", "play C first and then chose whichever choice the second player chose last time", "play random whether C or D each time" the 4 possibles strategies
+\end{itemize}
+
+The payoff matrix of a 2-person prisoner's dilemma is illustrated below in \autoref{fig:payoff-EX3} 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.5]{figures/payoff-EX3.png}
+  \caption{Payoff matrix of a 2-person prisoner's dilemma}
+  \label{fig:payoff-EX3}
+\end{figure}
+
+\subsection{Question 1 - Expected payoff of strategies}
+
+\subsubsection*{Statement}
+
+\textit{Complete the notebook with the payoff table and copy in your answer	document the expected payoff of each strategy when facing	against	each other strategy. Use the provided python notebook ("2IPD.ipnb") to calculate the fixation probabilities of each strategy for $\beta = 10$ and paste the stationary distribution in your answer document.}
+
+\subsubsection{Expected payoff of each strategy}
+Here are the calculations of each strategy facing against each other strategy with $m = 10$ for a player $i$. As reminder, $U_{i}(a_{i},a_{-i})$ denotes the expected payoff value of the strategy $a_{i}$ against the strategy $a_{-i}$ for $m$ rounds while $u_{i}(a_{i},a_{-i})$ is for \textbf{one} round.  
+
+\begin{flalign}
+U_{i}(C,C) &= 3 \cdot m = 30 \\
+U_{i}(C,D) &= 0 \cdot m = 0 \\
+U_{i}(C,TFT) &= 3 \cdot m = 30 \\
+U_{i}(C,RANDOM) &=  \left[\frac{1}{2} \cdot u_{i}(C,C) + \frac{1}{2} \cdot u_{i}(C,D) \right] \cdot m = (\frac{1}{2} \cdot 3 + \frac{1}{2} \cdot 0) \cdot 10 = 15 \\ \nonumber \\
+U_{i}(D,C) &= 4 \cdot m = 40 \\
+U_{i}(D,D) &= 1 \cdot m = 10 \\
+U_{i}(D,TFT) &= u_{i}(D,C) + 1 \cdot (m-1) = 4 + 9 = 13 \\
+U_{i}(D,RANDOM) &= \left[\frac{1}{2} \cdot u_{i}(D,C) + \frac{1}{2} \cdot u_{i}(D,D) \right] = (\frac{1}{2} \cdot 4 + \frac{1}{2} \cdot 1) \cdot 10 = 25 \\ \nonumber \\
+U_{i}(TFT,C) &= 3 \cdot m = 30 \\
+U_{i}(TFT,D) &= u_{i}(C,D) + 1 \cdot (m-1) = 0 + 9 = 9 \\
+U_{i}(TFT,TFT) &= 3 \cdot m = 30 \\
+  &\begin{aligned}
+    \mathllap{U_{i}(TFT,RANDOM)} &= u_{i}(C,RANDOM) + \\
+      &\qquad \left[\frac{1}{4} \cdot u_{i}(C,C) + \frac{1}{4} \cdot u_{i}(C,D) + \frac{1}{4} \cdot u_{i}(D,C) \frac{1}{4} \cdot u_{i}(D,D)\right] \cdot (m-1) \\
+      &\qquad = \frac{5}{2} + \left[ 0 + \frac{3}{4} + 1 + \frac{1}{4} \right] \cdot 9 = 19.5 
+  \end{aligned} \\
+  U_{i}(RANDOM,C) &= \left[\frac{1}{2} \cdot u_{i}(C,C) + \frac{1}{2} \cdot u_{i}(D,C) \right] \cdot m = \left[\frac{1}{2} \cdot 3 + \frac{1}{2} \cdot 4 \right] \cdot 10 = 35 \\
+U_{i}(RANDOM,D) &= \left[\frac{1}{2} \cdot u_{i}(C,D) + \frac{1}{2} \cdot u_{i}(D,D) \right] \cdot m = \left[\frac{1}{2} \cdot 0 + \frac{1}{2} \cdot 1 \right] \cdot 10 = 5 \\
+&\begin{aligned}
+    \mathllap{U_{i}(RANDOM,TFT)} &= \left[\frac{1}{2} \cdot u_{i}(C,C) + \frac{1}{2} \cdot u_{i}(D,C) \right] + \\
+      &\qquad \left[\frac{1}{4} \cdot u_{i}(C,C) + \frac{1}{4} \cdot u_{i}(C,D) + \frac{1}{4} \cdot u_{i}(D,C) \frac{1}{4} \cdot u_{i}(D,D)\right] \cdot (m-1) \\
+      &\qquad = \frac{7}{2} + \left[ 0 + \frac{3}{4} + 1 + \frac{1}{4} \right] \cdot 9 = 21.5 
+  \end{aligned}
+\end{flalign}
+
+\begin{flalign}
+    &\begin{aligned}
+    \mathllap{U_{i}(RANDOM,RANDOM)} &= \left[\frac{1}{4} \cdot u_{i}(C,C) + \frac{1}{4} \cdot u_{i}(C,D) + \frac{1}{4} \cdot u_{i}(D,C) \frac{1}{4} \cdot u_{i}(D,D)\right] \cdot m   \\
+      &\qquad = \left[ 0 + \frac{3}{4} + 1 + \frac{1}{4} \right] \cdot 10 = 20 
+  \end{aligned}
+\end{flalign}
+
+To summerize and to make it more clear, \autoref{table:payoff-recap-EX3)} recaps all the expected payoff values for each strategy against every other strategy for $m=10$. 
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+  \hline
+  	\backslashbox[0pt][l]{Strat 1}{Strat 2}   & C & D & TFT & RANDOM \\
+  \hline
+  C & 30 & 0 & 30 & 15  \\
+  \hline
+  D & 40 & 10 & 13 & 25 \\
+  \hline
+  TFT & 30 & 9 & 30 & 19.5 \\
+  \hline
+  RANDOM & 35 & 5 & 21.5 & 20 \\
+  \hline
+\end{tabular}
+\captionof{table}{Expected payoff values of 2-players prisoner's dilemma when $m=10$}
+\label{table:payoff-recap-EX3)}
+\end{center}
+
+\subsubsection{Fixation probabilities}
+
+The fixation probabilities are given in the matrix below. Respectively from left to right : $C, D, TFT$ and $RANDOM$. 
+
+$$
+\begin{bmatrix} 
+ 2.65746147e-10  & 9.99999973e-01 &  2.68402668e-08 &  2.65744154e-10 \\
+\end{bmatrix}
+$$
+
+\subsubsection{Stationary distribution}
+
+The stationary distribution when $\beta = 10$ is presented in the \autoref{fig:stationary-beta10}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.46]{figures/stationary-beta10.png}
+  \caption{stationary distribution when $\beta = 10$ and $m=10$}
+  \label{fig:stationary-beta10}
+\end{figure}
+
+\subsection{Question 2 - Stationary distribution for different $\beta$}
+
+\subsubsection*{Statement}
+
+\textit{Draw the stationary	distribution for these 4 strategies	when the mutation rate $\mu \rightarrow 0$ for different values of $\beta$.	 Paste the graph generated by the provided	python notebook in your	answer document}
+
+\subsubsection{Result}
+The mutation rate $\mu$ is denoted by the variable $drift$ in the Python notebook. When setting it at \textbf{$\beta = 0.01$} (which means $\mu \rightarrow 0$), the result of the stationary distribution for different values of $\beta$ are given below : \\
+
+\textbf{$\beta = 10$ :} 
+$$
+\begin{bmatrix} 
+ 2.65746147e-10  & 9.99999973e-01 &  2.68402668e-08 &  2.65744154e-10 \\
+\end{bmatrix}
+$$
+
+\textbf{$\beta = 5$ :} 
+$$
+\begin{bmatrix} 
+ 7.10392023e-06 &  9.99268310e-01  & 7.17495943e-04  & 7.09002624e-06 \\
+\end{bmatrix}
+$$
+
+\textbf{$\beta = 1$ :} 
+$$
+\begin{bmatrix} 
+0.00594699 & 0.38929365 & 0.5991636 &  0.00559576 \\
+\end{bmatrix}
+$$
+
+What we can see from that results is that more the value of $\beta$ is small, more the stationary distribution of the strategies are high. It grows quite exponentially. 
+
+\subsubsection{Graph}
+
+Concerning the graph of the stationary distribution, whatever the value of $\beta$ it doesn't change anything. Therefore, the graph for every $\beta$ is given by the \autoref{fig:stationary-beta10}.
+
+
+\subsection{Question 3 - Best strategy}
+
+\subsubsection*{Statement}
+
+\textit{Which strategy is more successful ?}
+
+\subsubsection{Best strategy}
+
+The best strategy is "Always play D". In the graph presented in \autoref{fig:stationary-beta10}, we can see that more the selection strength $\beta$ is high, more the strategy $D$ is increasing which shows that more	important the payoff is	in the selection process more $D$ is benefit. 
+
+\subsection{Question 4 - $m=1$}
+
+\subsubsection*{Statement}
+
+\textit{What happens if $m=1$ ?}
+
+\subsubsection{New expected payoffs}
+
+Of course, modifying $m$ impacts the values of the expected payoff. Here are presented  these values when $m=1$. Obviously, it will also impacts the fixation probabilities values and the stationary distribution. It will be shown in the \autoref{sec:fixprob-m1} and \autoref{sec:statio-m1}. 
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+  \hline
+  	\backslashbox[0pt][l]{Strat 1}{Strat 2} & C & D & TFT & RANDOM \\
+  \hline
+  C & 3 & 0 & 3 & 1.5  \\
+  \hline
+  D & 4 & 1 & 4 & 2.5 \\
+  \hline
+  TFT & 3 & 0 & 3 & 1.5 \\
+  \hline
+  RANDOM & 2.5 & 0.5 & 2.5 & 2 \\
+  \hline
+\end{tabular}
+\captionof{table}{Expected payoff values of 2-players prisoner's dilemma when $m=1$}
+\label{table:payoff-recap-EX3-m1)}
+\end{center}
+
+\subsubsection{Fixation probabilities} \label{sec:fixprob-m1}
+
+The fixation probabilities where $m=1$ are given in the matrix below. Respectively from left to right : $C, D, TFT$ and $RANDOM$. 
+
+$$
+\begin{bmatrix} 
+ 3.04072135e-17   1.00000000e+00   1.04488881e-17   2.61829550e-27 \\
+\end{bmatrix}
+$$
+
+\subsubsection{Stationary distribution} \label{sec:statio-m1}
+
+The stationary distribution when $\beta = 10$ and $m=1$ is presented in the \autoref{fig:stationary-beta1}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.4]{figures/stationary-beta1.png}
+  \caption{stationary distribution when $\beta = 10$ and $m=1$}
+  \label{fig:stationary-beta1}
+\end{figure}
 
 \end{document}
