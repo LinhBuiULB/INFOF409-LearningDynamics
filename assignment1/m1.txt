@@ -1,0 +1,20 @@
+# Strategy labels
+strats=['C','D', 'TFT', 'RANDOM'] # 1, 2, 3, 4
+# Payoffs of each strategy when facing each other (order: 11, 12, 13, 14, 21...)
+payoff=np.array([lambda k: 3, # Here C vs C
+                 lambda k: 0 , # Here C vs D
+                 lambda k: 3, # Here C vs TFT
+                 lambda k: 1.5, # Here C vs RANDOM
+                 lambda k: 4, # Here D vs C
+                 lambda k: 1, # Here D vs D
+                 lambda k: 4, # Here D vs TFT
+                 lambda k: 2.5, # Here D vs RANDOM
+                 lambda k: 3, # Here TFT vs C
+                 lambda k: 0, # Here TFT vs D
+                 lambda k: 3, # Here TFT vs TFT
+                 lambda k: 1.5, # Here TFT vs RANDOM
+                 lambda k: 2.5, # Here RANDOM vs C
+                 lambda k: 0.5, # Here RANDOM vs D
+                 lambda k: 2.5, # Here RANDOM vs TFT
+                 lambda k: 2  # Here RANDOM vs RANDOM
+                ]).reshape(q,q)
