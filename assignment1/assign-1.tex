@@ -178,16 +178,19 @@ pure strategy $j$} :
  U_{1}^{D} &= (1-q) \cdot (\frac{V}{2} - T) 
 \end{flalign}
 
-To find the value of probability $q$, we equalize the two equations to isolate $q$ : 
+To find the value of probability $q$ and to know which strategy is the best in which case, we make an inequality between the two equations to isolate $q$ (here, we deal with (1) < (2) which means that we will find the condition where playing $Hawk$ is less optimal than playing $Dove$): 
 \begin{flalign}
- q \cdot (\frac{V-D}{2}) + (1-q) \cdot V &= (1-q) \cdot (\frac{V}{2} - T)  \\
- \frac{qV}{2} - \frac{qD}{2} + V - pV &= \frac{V}{2} - T - \frac{qV}{2} + qT \nonumber \\
- - \frac{qD}{2} &= - \frac{V}{2} - T + pT \nonumber \\ 
- \frac{qD}{2} + pT &= \frac{V}{2} + T \nonumber \\ 
- q \cdot (\frac{D}{2} + T) &= \frac{V}{2} + T \nonumber \\
- q  &= \frac{\frac{V}{2} +  T}{\frac{D}{2} + T} \nonumber \\  
- \Aboxed{q &= \frac{V+2T}{D+2T}}
+ q \cdot (\frac{V-D}{2}) + (1-q) \cdot V &< (1-q) \cdot (\frac{V}{2} - T)  \\
+ \frac{qV}{2} - \frac{qD}{2} + V - qV &< \frac{V}{2} - T - \frac{qV}{2} + qT \nonumber \\
+ - \frac{qD}{2} &< - \frac{V}{2} - T + qT \nonumber \\ 
+ \frac{qD}{2} + qT &> \frac{V}{2} + T \nonumber \\ 
+ q \cdot (\frac{D}{2} + T) &> \frac{V}{2} + T \nonumber \\
+ q  &> \frac{\frac{V}{2} +  T}{\frac{D}{2} + T} \nonumber \\  
+ \Aboxed{q &> \frac{V+2T}{D+2T}}
 \end{flalign}
+
+Therefore, when $q > \frac{V+2T}{D+2T}$, playing $Dove$ is the best choice because  
+$U_{1}^{H} <  U_{1}^{D}$. On the contrary, when $q < \frac{V+2T}{D+2T}$ playing $Hawk$ is then the best choice because  $U_{1}^{H} >  U_{1}^{D}$.\\
 
 By symmetry, we can deduct the equations for player 2 :  
 \begin{flalign}
@@ -205,11 +208,11 @@ which means that :
 p = q = \frac{V+2T}{D+2T} \in [0,1] 
 \end{flalign}
 
-Therefore, for player one \textcolor{blue}{(two)}, when :
+To summarize, for player one \textcolor{blue}{(two)}, when :
 \begin{itemize}
-\item $q \textcolor{blue}{(p)} > \frac{V+2T}{D+2T}$, the best response set is {$Hawk$} or $p \textcolor{blue}{(q)}=1$
+\item $q \textcolor{blue}{(p)} > \frac{V+2T}{D+2T}$, the best response set is {$Dove$} or $p \textcolor{blue}{(q)}=0$
 \item $q \textcolor{blue}{(p)} = \frac{V+2T}{D+2T}$, the best response set is the set of all $p \textcolor{blue}{(q)}$ values in [0,1]
-\item $q \textcolor{blue}{(p)} < \frac{V+2T}{D+2T}$, the best response set is {$Dove$} or $p \textcolor{blue}{(q)} =0 $
+\item $q \textcolor{blue}{(p)} < \frac{V+2T}{D+2T}$, the best response set is {$Hawk$} or $p \textcolor{blue}{(q)} = 1 $
 \end{itemize}
 
 \subsection{Question 2 - Mixed strategy drawing}
@@ -220,7 +223,7 @@ Therefore, for player one \textcolor{blue}{(two)}, when :
 
 \subsubsection*{Graph of all mixed strategies}
 
-Based on the calculations of probabilities $p$ and $q$ in the \autoref{sec:mixedStrat}, the graph of all mixed strategies for the Hawk-Dove game is presented in the \autoref{fig:HD-MixedStrat-Graph}. The green lines are the set of player 1's best mixed strategies while the red ones are the set of player 2's best mixed strategies. The blue circles are the mixed strategies Nash equilibria of the game. Thus, we have three possible Nash equilibria that are defined by the sets $\{(1,0);(1,0)\}, \{(0,1),(0,1)\}$ and $  \{(\frac{V+2T}{D+2T},\frac{V+2T}{D+2T}),(\frac{V+2T}{D+2T},\frac{V+2T}{D+2T})\}$.  
+Based on the calculations of probabilities $p$ and $q$ in the \autoref{sec:mixedStrat}, the graph of all mixed strategies for the Hawk-Dove game is presented in the \autoref{fig:HD-MixedStrat-Graph}. The green lines are the set of player 1's best mixed strategies while the red ones are the set of player 2's best mixed strategies. The blue circles are the mixed strategies possible Nash equilibria of the game. Thus, we have three possible Nash equilibria that are defined by the sets $\{(1,0);(1,0)\}, \{(0,1),(0,1)\}$ and $  \{(\frac{V+2T}{D+2T},\frac{V+2T}{D+2T}),(\frac{V+2T}{D+2T},\frac{V+2T}{D+2T})\}$. However, the only one is  $  \{(\frac{V+2T}{D+2T},\frac{V+2T}{D+2T}),(\frac{V+2T}{D+2T},\frac{V+2T}{D+2T})\}$. 
 
 \begin{figure}[h]
   \centering
@@ -231,7 +234,7 @@ Based on the calculations of probabilities $p$ and $q$ in the \autoref{sec:mixed
 
 \textbf{Remark} Note that $\frac{V+2T}{D+2T}$ has to be a value between 0 and 1 otherwise it wouldn't be a valid probability. Therefore, to respect this condition, necessarily $V \le D $. \\
 
-To conclude, as calculated in the \autoref{sec:mixedStrat} and represented in the \autoref{fig:HD-MixedStrat-Graph}, if a player $i$ plays $Hawk$ with a probability $ >  \frac{V+2T}{D+2T}$ then the opponent player would play $Hawk$ because the expected value for playing $Hawk$ is higher than the expected value of playing $Dove$. Similarly, playing $Dove$ is then an optimal choice when the player $i$ chooses $Hawk$ with a probability $ < \frac{V+2T}{D+2T}$.
+To conclude, as calculated in the \autoref{sec:mixedStrat} and represented in the \autoref{fig:HD-MixedStrat-Graph}, if a player $i$ plays $Hawk$ with a probability $ <  \frac{V+2T}{D+2T}$ then the opponent player would play $Hawk$ because the expected value for playing $Hawk$ is higher than the expected value of playing $Dove$. Similarly, playing $Dove$ is then an optimal choice when the player $i$ chooses $Hawk$ with a probability $ > \frac{V+2T}{D+2T}$.
 
 \newpage
 \section{Which social dilemma ?}
@@ -311,37 +314,39 @@ The payoff matrix of a 2-person prisoner's dilemma is illustrated below in \auto
 \textit{Complete the notebook with the payoff table and copy in your answer	document the expected payoff of each strategy when facing	against	each other strategy. Use the provided python notebook ("2IPD.ipnb") to calculate the fixation probabilities of each strategy for $\beta = 10$ and paste the stationary distribution in your answer document.}
 
 \subsubsection{Expected payoff of each strategy}
-Here are the calculations of each strategy facing against each other strategy with $m = 10$ for a player $i$. As reminder, $U_{i}(a_{i},a_{-i})$ denotes the expected payoff value of the strategy $a_{i}$ against the strategy $a_{-i}$ for $m$ rounds while $u_{i}(a_{i},a_{-i})$ is for \textbf{one} round.  
+Here are the calculations of each strategy facing against each other strategy with $m = 10$ for a player $i$. As reminder, $U_{i}(a_{i},a_{-i})$ denotes the expected payoff value of the strategy $a_{i}$ against the strategy $a_{-i}$ for $m$ rounds such that payoffs for  
+\begin{itemize}
+\item Reward for mutual cooperation (C vs C) $\equiv R = 3$ 
+\item Punishment for mutual defection (D vs D) $\equiv P = 1$
+\item Suckers payoff for unilateral cooperation (C vs D) $\equiv S = 0$
+\item Temptation to defect (D vs C) $\equiv T = 4$
+\end{itemize}  
 
 \begin{flalign}
-U_{i}(C,C) &= 3 \cdot m = 30 \\
-U_{i}(C,D) &= 0 \cdot m = 0 \\
-U_{i}(C,TFT) &= 3 \cdot m = 30 \\
-U_{i}(C,RANDOM) &=  \left[\frac{1}{2} \cdot u_{i}(C,C) + \frac{1}{2} \cdot u_{i}(C,D) \right] \cdot m = (\frac{1}{2} \cdot 3 + \frac{1}{2} \cdot 0) \cdot 10 = 15 \\ \nonumber \\
-U_{i}(D,C) &= 4 \cdot m = 40 \\
-U_{i}(D,D) &= 1 \cdot m = 10 \\
-U_{i}(D,TFT) &= u_{i}(D,C) + 1 \cdot (m-1) = 4 + 9 = 13 \\
-U_{i}(D,RANDOM) &= \left[\frac{1}{2} \cdot u_{i}(D,C) + \frac{1}{2} \cdot u_{i}(D,D) \right] = (\frac{1}{2} \cdot 4 + \frac{1}{2} \cdot 1) \cdot 10 = 25 \\ \nonumber \\
-U_{i}(TFT,C) &= 3 \cdot m = 30 \\
-U_{i}(TFT,D) &= u_{i}(C,D) + 1 \cdot (m-1) = 0 + 9 = 9 \\
-U_{i}(TFT,TFT) &= 3 \cdot m = 30 \\
+U_{i}(C,C) &= R \cdot m = 30 \\
+U_{i}(C,D) &= S \cdot m = 0 \\
+U_{i}(C,TFT) &= R \cdot m = 30 \\
+U_{i}(C,RANDOM) &=  \left[\frac{1}{2} \cdot R + \frac{1}{2} \cdot S \right] \cdot m = (\frac{1}{2} \cdot 3 + \frac{1}{2} \cdot 0) \cdot 10 = 15 \\ \nonumber \\
+U_{i}(D,C) &= T \cdot m = 40 \\
+U_{i}(D,D) &= P \cdot m = 10 \\
+U_{i}(D,TFT) &= T + P \cdot (m-1) = 4 + 9 = 13 \\
+U_{i}(D,RANDOM) &= \left[\frac{1}{2} \cdot T + \frac{1}{2} \cdot P \right] = (\frac{1}{2} \cdot 4 + \frac{1}{2} \cdot 1) \cdot 10 = 25 \\ \nonumber \\
+U_{i}(TFT,C) &= R \cdot m = 30 \\
+U_{i}(TFT,D) &= S + P \cdot (m-1) = 0 + 9 = 9 \\
+U_{i}(TFT,TFT) &= R \cdot m = 30 \\
   &\begin{aligned}
-    \mathllap{U_{i}(TFT,RANDOM)} &= u_{i}(C,RANDOM) + \\
-      &\qquad \left[\frac{1}{4} \cdot u_{i}(C,C) + \frac{1}{4} \cdot u_{i}(C,D) + \frac{1}{4} \cdot u_{i}(D,C) \frac{1}{4} \cdot u_{i}(D,D)\right] \cdot (m-1) \\
+    \mathllap{U_{i}(TFT,RANDOM)} &= \left[\frac{1}{2} \cdot R + \frac{1}{2} \cdot S \right]   + \left[\frac{1}{4} \cdot R + \frac{1}{4} \cdot S + \frac{1}{4} \cdot T + \frac{1}{4} + \cdot P \right] \cdot (m-1) \\
       &\qquad = \frac{5}{2} + \left[ 0 + \frac{3}{4} + 1 + \frac{1}{4} \right] \cdot 9 = 19.5 
-  \end{aligned} \\
-  U_{i}(RANDOM,C) &= \left[\frac{1}{2} \cdot u_{i}(C,C) + \frac{1}{2} \cdot u_{i}(D,C) \right] \cdot m = \left[\frac{1}{2} \cdot 3 + \frac{1}{2} \cdot 4 \right] \cdot 10 = 35 \\
-U_{i}(RANDOM,D) &= \left[\frac{1}{2} \cdot u_{i}(C,D) + \frac{1}{2} \cdot u_{i}(D,D) \right] \cdot m = \left[\frac{1}{2} \cdot 0 + \frac{1}{2} \cdot 1 \right] \cdot 10 = 5 \\
-&\begin{aligned}
-    \mathllap{U_{i}(RANDOM,TFT)} &= \left[\frac{1}{2} \cdot u_{i}(C,C) + \frac{1}{2} \cdot u_{i}(D,C) \right] + \\
-      &\qquad \left[\frac{1}{4} \cdot u_{i}(C,C) + \frac{1}{4} \cdot u_{i}(C,D) + \frac{1}{4} \cdot u_{i}(D,C) \frac{1}{4} \cdot u_{i}(D,D)\right] \cdot (m-1) \\
-      &\qquad = \frac{7}{2} + \left[ 0 + \frac{3}{4} + 1 + \frac{1}{4} \right] \cdot 9 = 21.5 
   \end{aligned}
 \end{flalign}
 
-\begin{flalign}
+\begin{flalign} 
+  U_{i}(RANDOM,C) &= \left[\frac{1}{2} R + \frac{1}{2} \cdot T \right] \cdot m = \left[\frac{1}{2} \cdot 3 + \frac{1}{2} \cdot 4 \right] \cdot 10 = 35 \\
+U_{i}(RANDOM,D) &= \left[\frac{1}{2} \cdot S + \frac{1}{2} \cdot P \right] \cdot m = \left[\frac{1}{2} \cdot 0 + \frac{1}{2} \cdot 1 \right] \cdot 10 = 5 \\
+ U_{i}(RANDOM,TFT) &= \left[\frac{1}{2} \cdot R + \frac{1}{2} \cdot T \right] + \left[\frac{1}{4} \cdot R + \frac{1}{4} \cdot S + \frac{1}{4} \cdot T + \frac{1}{4} \cdot P \right] \cdot (m-1) \\ 
+ &= \frac{7}{2} + \left[ 0 + \frac{3}{4} + 1 + \frac{1}{4} \right] \cdot 9 = 21.5 \nonumber \\
     &\begin{aligned}
-    \mathllap{U_{i}(RANDOM,RANDOM)} &= \left[\frac{1}{4} \cdot u_{i}(C,C) + \frac{1}{4} \cdot u_{i}(C,D) + \frac{1}{4} \cdot u_{i}(D,C) \frac{1}{4} \cdot u_{i}(D,D)\right] \cdot m   \\
+    \mathllap{U_{i}(RANDOM,RANDOM)} &= \left[\frac{1}{4} \cdot R + \frac{1}{4} \cdot S + \frac{1}{4} \cdot T + \frac{1}{4} \cdot P \right] \cdot m   \\
       &\qquad = \left[ 0 + \frac{3}{4} + 1 + \frac{1}{4} \right] \cdot 10 = 20 
   \end{aligned}
 \end{flalign}
@@ -376,17 +381,20 @@ $$
 \end{bmatrix}
 $$
 
+
+
 \subsubsection{Stationary distribution}
 
 The stationary distribution when $\beta = 10$ is presented in the \autoref{fig:stationary-beta10}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale=0.46]{figures/stationary-beta10.png}
+  \includegraphics[scale=0.4]{figures/stationary-beta10.png}
   \caption{stationary distribution when $\beta = 10$ and $m=10$}
   \label{fig:stationary-beta10}
 \end{figure}
 
+\newpage 
 \subsection{Question 2 - Stationary distribution for different $\beta$}
 
 \subsubsection*{Statement}
@@ -468,7 +476,7 @@ The fixation probabilities where $m=1$ are given in the matrix below. Respective
 
 $$
 \begin{bmatrix} 
- 3.04072135e-17   1.00000000e+00   1.04488881e-17   2.61829550e-27 \\
+ 3.04072135e-17 &  1.00000000e+00  & 1.04488881e-17  & 2.61829550e-27 \\
 \end{bmatrix}
 $$
 
@@ -478,9 +486,47 @@ The stationary distribution when $\beta = 10$ and $m=1$ is presented in the \aut
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale=0.4]{figures/stationary-beta1.png}
+  \includegraphics[scale=0.32]{figures/stationary-beta1.png}
   \caption{stationary distribution when $\beta = 10$ and $m=1$}
   \label{fig:stationary-beta1}
+\end{figure}
+
+\subsubsection{Best strategy}
+
+Therefore, we can also find the best stragegy where $m=1$ thanks to the previous results. However, the best strategy is still "Always play D" as observated in the graph. That's the only strategy where the strategy's stationary distribution increases when the intensity of selection increases. 
+
+
+\subsection{Question 5 - Moran process}
+
+\subsubsection*{Statement}
+\textit{Implement the Moran process algorithm. Repeat the simulation 10 times for $10^{3}$ generations.}
+
+\subsubsection{Result}
+The stationary distribution given by the simulation is illustrated in the \autoref{fig:stationary-moran}. Of course, we have to keep in mind that it's not the only possible graph because it's a simulation with random values. However, the behaviour of all these graphs are the same. In this case, the behaviour of the graph is beneficial for the "TFT" strategy. Compared to the graph obtained in the question 2, we have then a different optimal strategy which was "Only defect" and becomes "TFT" here. \\
+
+In theory, "only defect" is the optimal strategy as shown before because playing only D will never make the other player get more payoff than him but in practice, it seems that "TFT" is the best strategy to adopt. To explain this, "TFT" is a win-win strategy and applying this strategy will never make the player lose. "TFT" is a strategy that promotes the cooperating strategy and punish the defecting strategy. Thus, "TFT" will force the other player to cooperate if he wants higher payoff, i.e if player 2 plays only defect, he knows that the player 1 who plays "TFT" will make him win only 1 per round while he could win 3 if he cooperates. So naturally, the second player will cooperate, then "TFT" is the most benefit strategy and allows both player to have good payoffs. This phenomenon is also observable in the \autoref{fig:stationary-moran}, we see that when the distribution of D decreases, the "TFT" one is increasing and vice versa. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.35]{figures/stationary-moran.png}
+  \caption{stationary distribution with Moran process algorithm}
+  \label{fig:stationary-moran}
+\end{figure}
+
+\newpage
+\subsubsection{Question 6 - Mutation rate}
+\subsubsection*{Statement}
+\textit{What happens if	the	mutation rate is bigger	than zero?}
+
+
+\subsubsection{Result}
+The value of $\mu$ put at $10^{-3}$ gives us the result shown in \autoref{fig:stationary-mu5-moran}. What we can see from the graph is that the same general appearance seems to appear even we have some randomness. Indeed, the "TFT" strategy is still the best one followed by "Only Defect" and the 2 others. Nevertheless, this randomness decreases a bit the gap between the different strategies. Thus, we can sometimes have a different result between those strategies, for instance when $\beta = 10$, the D strategy has a lower stationary distribution than C while it never happens in the previous section when the randomness was null. However, this randomness is not enough large to totally modify the general behaviour and the optimal strategy. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.35]{figures/stationary-mu5-moran.png}
+  \caption{stationary distribution with $\mu > 0$}
+  \label{fig:stationary-mu5-moran}
 \end{figure}
 
 \end{document}
