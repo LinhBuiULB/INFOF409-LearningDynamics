@@ -1,0 +1,102 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[pdftex]{graphicx}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[francais,english]{babel}
+\frenchbsetup{StandardLists=true}
+\selectlanguage{english}
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{slashbox}
+
+
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\usepackage{listings}
+
+\usepackage{graphicx}
+
+\renewcommand\thesection{\arabic{section}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+
+
+\title{[INFO-F409] Learning Dynamics \\ Second assignment}
+\author{\bsc{BUI QUANG PHUONG} Quang Linh \\ Université libre de Bruxelles - ULB ID : 000427796  \\ MA1 Computer Sciences}
+\date{December 2018}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+\section{Part I: Complex networks}
+
+\subsection{1 - Erdos-Renye network}
+
+\subsubsection{Q1 statement}
+
+\textit{Generate Erdos-Renye network (Random networks) [1,2]. Generate the network from scratch and present/describe the part of the code you used to generate the network in your document.} 
+
+\subsubsection*{Algorithm / Pseudo-code}
+
+\subsubsection{Q2 statement}
+
+\textit{Plot the degree distribution of the generated network. Calculate the mean and standard deviation and plot the normal distribution with these same parameters}
+
+\subsubsection*{Degree distribution}
+
+\subsubsection*{Mean and standard deviation}
+
+\subsection{2 - Barabasi-Albert network}
+
+\subsubsection{Q3 statement}
+\textit{Generate a Barabasi-Albert network (Scale Free network) [1,3]. Generate the network from scratch and present/describe the part of the code you used to generate the network in your document.}
+
+\subsubsection*{Algorithm / Pseudo-code} 
+
+\subsubsection{Q4 statement}
+\textit{Plot the degree distribution of the generated network using a linear scale on both axes. Plot in the same figure an exponential distribution which looks similar and reports on the parameters of that distribution.}
+
+\subsubsection*{Degree distribution result (linear scale)} 
+
+\subsubsection*{Exponential distribution} 
+
+\subsubsection{Q5 statement}
+\textit{Plot the same distribution on log-log scale. Fit the distribution using Least Square fit. You can use existing functions for fitting and plot the fit next to the data. What are the parameters of the fit? How does it fit? Why? Write a paragraph about why we should not use Least Square fit to fit power laws.}
+
+\subsubsection*{Distribution on log-log scale} 
+
+\subsubsection*{Fitting using Least Square Fit} 
+
+\subsubsection{Q6 statement}
+\textit{Plot cumulative distribution and fit it with Least Square Fit, report the obtained parameters and plot of the fitted function.}
+
+\subsubsection*{Plotting result and parameters} 
+
+\subsubsection{Q7 statement}
+\textit{Now fit your distribution using maximum likelihood method. You can use any of the packages which has the method developed.}
+
+\subsubsection{Q8 statement}
+\textit{Report the parameters of the fit and plot them next to distribution.}
+
+\subsubsection{Q9 statement}
+\textit{Compare the power law fit with the exponential fit (using the same package). Report the log likelihood ratio R and the p-value. What do these numbers mean?}
+
+\subsubsection{Q10 statement}
+\textit{What is the mathematical formula for scale free distribution you generated? Calculate the mean and the standard deviation of function? What would be the mean and standard deviation if the exponent would be 2.5?}
+
+
+\end{document}
