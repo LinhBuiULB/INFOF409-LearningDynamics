@@ -6,6 +6,8 @@ import seaborn as sns
 import collections
 from scipy.stats import norm
 
+TOTAL_DEGREE = 12
+
 def init_4nodes_graph():
    G = nx.Graph()
 
@@ -18,33 +20,23 @@ def init_4nodes_graph():
    return G 
 
 def barabasi_albert(G):
-   stop = 10
-   probaLink = 0
+   stop = 100
+   probaList = []
+   global TOTAL_DEGREE
 
-   for i in range(3,stop):
+   for i in range(4,stop):
       G.add_node(i)
-      nbLinks = 0 
-
-      while(nbLinks < 4):
-         for j in range(len(G)):
-            probaLink = computeProbaLinkTo_i(G,j)
-            if random.random() < probaLink:
-               G.add_edge(i, j)
-               nbLinks += 1
-               if(nbLinks == 4): break 
-
-def sumAllNodesDegrees(G):
-   allNodes = list(G.nodes)
-   tuplesNodesDegrees = list(G.degree(allNodes))
-   sumAllNodesDegrees = 0
-
-   for i in range(len(tuplesNodesDegrees)):
-      sumAllNodesDegrees += tuplesNodesDegrees[i][1]
-
-   return sumAllNodesDegrees
+      print(i)
+      for j in range(0,i):
+         probaList.append(computeProbaLinkTo_i(G,j))
+      choseNodes = np.random.choice(i, 4, replace=False, p=probaList)
+      for node in choseNodes:
+          G.add_edge(i, node)
+      TOTAL_DEGREE += 8 
+      probaList = []
 
 def computeProbaLinkTo_i(G, node_i):
-   prob_linkTo_i = G.degree(node_i) / sumAllNodesDegrees(G)
+   prob_linkTo_i = G.degree(node_i) / TOTAL_DEGREE
    return prob_linkTo_i
 
 def plotDegreeDistribution(G):
@@ -66,8 +58,7 @@ def plotDegreeDistribution(G):
    plt.title("Degree Histogram")
    plt.ylabel("Count")
    plt.xlabel("Degree")
-   ax.set_xticks([d + 0.4 for d in deg])
-   ax.set_xticklabels(deg)
+   plt.bar(deg, cnt, align='center', width=0.80, color='b')
 
    plt.show()
 
@@ -84,11 +75,11 @@ def main():
 
    barabasi_albert(G)
 
-   print(G.nodes())
-   print(G.edges())
+   #print(G.nodes())
+   #print(G.edges())
 
    plotDegreeDistribution(G)
-   printGraph(G)
+   #printGraph(G)
 
 if __name__ == "__main__":
    main()
