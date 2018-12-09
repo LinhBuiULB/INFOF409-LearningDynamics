@@ -8,7 +8,7 @@ from scipy.stats import norm
 import er 
 import ba
 
-T = [1.05, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9]                    # Temptation to defect
+T = [1.05, 1.1, 1.15, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9]                    # Temptation to defect
 R=1                  # Reward for mutual cooperation
 P=0                   # Punishment for mutual defection
 S=-0.1                    # Suckers payoff for unilateral cooperation
@@ -82,7 +82,7 @@ def IPDonNetwork(G,number_t):
       payoff_current = playIPDwithNeighbors(G,i,number_t)
       payoffs_nodes[i] = payoff_current 
       adaptStrategy(G,i, number_t, payoffs_nodes)
-      if(G.nodes[i]['strategy'] == 'C'): cooperationLevel += 1
+      if(G.nodes[i]['strategy'] == 'C'): cooperationLevel += 1 
 
     cooperationLevelList.append(cooperationLevel/(len(G)))
     print(r)
@@ -94,9 +94,12 @@ def plotCooperationLevel(cooperationLevelList, number_t):
   plt.plot(cooperationLevelList, label=legendLabel)
   plt.legend(loc="upper left")
 
+def average(lst): 
+    return sum(lst) / len(lst)
 
 def main():
 
+  simulations = 5
   network = "BA"
 
   if(network == "ER"): 
@@ -118,12 +121,31 @@ def main():
 
 
   cooperations = []
+  coopRatesAverage = [] 
 
+  # For question 1-2 
   for i in range(len(T)):
+    print("####################### Calculating for {}".format(T[i]))
     coop = IPDonNetwork(G, i)
     cooperations.append(coop)
     plotCooperationLevel(coop, i)
 
+
+  '''
+  # For question 3 
+  for i in range(len(T)):
+    currentCoop = 0
+    print("####################### Calculating for {}".format(T[i]))
+    for j in range(simulations):
+        print("New simulation")
+        coop = IPDonNetwork(G, i) 
+        currentCoop += coop[j]
+    coopRatesAverage.append(currentCoop/simulations)
+
+  print(coopRatesAverage)
+  plt.plot(T, coopRatesAverage) 
+  plt.xticks(T)
+  '''   
   plt.show()
 
 if __name__ == "__main__":

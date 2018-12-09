@@ -12,11 +12,11 @@ powerlaw = lambda x, amp, index: amp * (x**index)
 ##########
 # Generate data points with noise
 ##########
-num_points = 46
+num_points = 94
 
 # Note: all positive, non-zero data
-xdata = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 4, 2, 2, 7, 1, 4, 5, 5, 3, 7, 4, 6, 15, 20, 22, 27, 30, 43, 58, 70, 111, 186, 342]
-ydata = [120, 107, 103, 87, 76, 74, 61, 58, 53, 49, 47, 46, 40, 38, 37, 36, 35, 34, 33, 32, 30, 29, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4]
+ydata = [1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 2, 1, 4, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 3, 1, 2, 4, 2, 3, 6, 2, 3, 4, 3, 4, 7, 2, 4, 5, 6, 6, 3, 3, 7, 6, 7, 4, 6, 16, 8, 9, 15, 21, 18, 24, 23, 18, 31, 27, 36, 38, 41, 53, 51, 73, 92, 95, 119, 132, 204, 238, 315, 370, 556, 811, 1208, 1900, 3306]
+xdata = [384, 329, 263, 248, 216, 192, 176, 173, 165, 158, 155, 133, 132, 128, 126, 125, 114, 111, 107, 101, 98, 93, 91, 90, 89, 86, 82, 80, 77, 76, 73, 72, 71, 70, 68, 67, 66, 65, 63, 62, 61, 60, 59, 57, 55, 54, 53, 52, 51, 49, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4]
 
 yerr = [0.2 * i for i in ydata]                      # simulated errors (10%)
 
@@ -70,13 +70,14 @@ plt.text(5, 5.5, 'Index = %5.2f +/- %5.2f' % (index, indexErr))
 plt.title('Best Fit Power Law')
 plt.xlabel('X')
 plt.ylabel('Y')
-plt.xlim(1, 1000)
+plt.xlim(1, 500)
 
 plt.subplot(2, 1, 2)
-plt.loglog(xdata, powerlaw(xdata, amp, index))
-plt.errorbar(xdata, ydata, yerr=yerr, fmt='k.')  # Data
+plt.loglog(xdata, powerlaw(xdata, amp, index), label='Least square fit')
+plt.errorbar(xdata, ydata, yerr=yerr, fmt='k.', label='Distribution')  # Data
 plt.xlabel('X (log scale)')
 plt.ylabel('Y (log scale)')
-plt.xlim(1.0, 1000)
+plt.xlim(1.0, 500)
 
+plt.legend(loc='upper right')
 plt.show()

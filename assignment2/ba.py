@@ -51,7 +51,7 @@ def exponential_func(x, a, b, c):
 
 def exponentialFit(deg, cnt):
    popt, pcov = curve_fit(exponential_func, deg, cnt, p0=(1, 1e-6, 1))
-   xx = np.linspace(3, 100, 1000)
+   xx = np.linspace(3, 400, 1000)
    yy = exponential_func(xx, *popt)
    return xx, yy
 
@@ -67,22 +67,21 @@ def plotDegreeDistribution(G):
    # Max Likelikhood 
    results = powerlaw.Fit(degree_sequence)
    results.plot_pdf()
-   #R, p = results.distribution_compare('power_law', 'lognormal')
-   #print("R,p",R,p)
+   R, p = results.distribution_compare('power_law', 'exponential')
+   print("R =",R , "p =",p)
    #plt.plot(x,y)
 
    # Plot exponential fit 
    #xx,yy = exponentialFit(deg,cnt)
-   #plt.plot(xx, yy,'-', color="red")
+   #plt.plot(xx, yy,'-', color="red", label="Exponential distribution")
 
    # Plot degree distribution 
-   #plt.bar(deg, cnt, align='center', width=0.80, color='b')
-   #plt.plot(deg,cnt,'o')
-
+   #plt.bar(deg, cnt, align='center', width=0.80, color='b', label="Degree distribution")
+   plt.plot(deg,cnt,'o')
+   plt.legend(loc='upper right')
    # LOG SCALE 
-   plt.xscale('log')
-   plt.yscale('log')
-
+   #plt.xscale('log')
+   #plt.yscale('log')
    plt.show()
 
 def initGraph():
@@ -96,7 +95,7 @@ def printGraph(G):
 def main():
    G = init_4nodes_graph()
 
-   barabasi_albert(G, 1000)
+   barabasi_albert(G, 10000)
 
    #print(G.nodes())
    #print(G.edges())

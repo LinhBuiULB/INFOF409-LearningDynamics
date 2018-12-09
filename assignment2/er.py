@@ -53,16 +53,17 @@ def plotDegreeDistribution(G):
 	print("Std",np.std(degree_sequence))
 
 	# Plot the histogram.
-	plt.hist(degree_sequence, bins=25, density=True, alpha=0.6, color='blue', align='mid')
-
+	plt.hist(degree_sequence, bins=25, density=True, alpha=0.6, color='blue', align='mid', label="Degree distribution")
+	
 	# Plot the PDF.
 	xmin, xmax = plt.xlim()
 	x = np.linspace(xmin, xmax, 100)
 	p = norm.pdf(x, mu, std)
 
-	plt.plot(x, p, 'k', linewidth=2)
+	plt.plot(x, p, 'k', linewidth=3, label="Normal distribution", color='red')
 	title = "Fit results: mu = %.2f,  std = %.2f" % (mu, std)
 	plt.title(title)
+	plt.legend(loc="upper right")
 
 	plt.show()
 
