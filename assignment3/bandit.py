@@ -95,7 +95,7 @@ def main():
 	algosList.append("R")
 
 	# For the second plot 
-	plt.plot(Q_1, label="Random")  #######
+	plt.plot(Q_3, label="Random")  #######
 
 	print("\n")
 
@@ -104,10 +104,10 @@ def main():
 		print("eps =",eps)
 		epsQ, epsReward, Q_0, Q_1, Q_2, Q_3 = bandit(strategy="greedy",eps=eps)
 		avgRewards.append(epsReward/ITERATIONS)
-		algosList.append("eps={}".format(eps))
+		algosList.append("Greedy - epsilon = {}".format(eps))
 
 		# For the second plot 
-		plt.plot(Q_1, label="Greedy - epsilon = {}".format(eps)) #######
+		plt.plot(Q_3, label="Greedy - epsilon = {}".format(eps)) #######
 
 	print("\n")
 
@@ -119,16 +119,27 @@ def main():
 		algosList.append("Softmax - tau = {}".format(val))
 
 		# For the second plot 
-		plt.plot(Q_1, label="tau={}".format(val)) #######
+		plt.plot(Q_3, label="Softmax - tau = {}".format(val)) #######
 
 	print("\n")
 
+	'''
 	# First plot 
-	#plt.plot(algosList, avgRewards)
+	plt.plot(algosList, avgRewards)
+	plt.title("Average reward for each algorithm")
+	plt.ylabel("Reward")
+	plt.xlabel("Algorithm")
+	'''
 
-	plt.hlines(y=1.3, xmin=0, xmax=1000, linewidth=3, color='black', linestyles="dotted", label="Theoretical") # Theoretical - Arm 1: 2.4 , Arm2 : 1.3,  Arm3 : 1, Arm4 : 2.2
-	plt.title("ARM 2 - Values of Q(a) over time")
+
+	# Second plot 
+	plt.hlines(y=2.2, xmin=0, xmax=1000, linewidth=3, color='black', linestyles="dotted", label="Theoretical") # Theoretical - Arm 1: 2.4 , Arm2 : 1.3,  Arm3 : 1, Arm4 : 2.2
+	plt.title("ARM 4 - Values of Q(a) over time")
+	plt.ylabel("Q-value")
+	plt.xlabel("Game number")
 	plt.legend()
+
+
 	plt.show()
 
 if __name__ == "__main__":
