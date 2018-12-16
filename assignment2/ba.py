@@ -59,15 +59,14 @@ def plotDegreeDistribution(G):
    degree_sequence, deg, cnt = getDegreesCount(G)
    print(degree_sequence,deg,cnt)
    degree_sequence = np.array(degree_sequence)
-   
-   plt.title("Degree Histogram")
-   plt.ylabel("Count")
-   plt.xlabel("Degree")
 
    # Max Likelikhood 
    results = powerlaw.Fit(degree_sequence)
-   results.plot_pdf()
-   R, p = results.distribution_compare('power_law', 'exponential')
+   fig2 = results.plot_pdf(label="Empirical distribution")
+   results.power_law.plot_pdf(color="b", linestyle="--", ax=fig2, label="Fitted distribution")
+   print("Alpha = ", results.power_law.alpha)
+   print("Sigma = ", results.power_law.sigma)
+   R, p = results.distribution_compare('power_law', 'exponential', normalized_ratio=True)
    print("R =",R , "p =",p)
    #plt.plot(x,y)
 
@@ -77,11 +76,17 @@ def plotDegreeDistribution(G):
 
    # Plot degree distribution 
    #plt.bar(deg, cnt, align='center', width=0.80, color='b', label="Degree distribution")
-   plt.plot(deg,cnt,'o')
+   #plt.plot(deg,cnt,'o')
    plt.legend(loc='upper right')
    # LOG SCALE 
    #plt.xscale('log')
    #plt.yscale('log')
+
+   title = "Fitting with Maximum Likelihood method: alpha = %.2f,  sigma = %.2f" % (results.power_law.alpha, results.power_law.sigma)
+   plt.title(title)
+   plt.ylabel("p(degree)")
+   plt.xlabel("Degree Frequency")
+
    plt.show()
 
 def initGraph():
