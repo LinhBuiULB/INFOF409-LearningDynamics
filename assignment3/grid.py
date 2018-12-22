@@ -81,7 +81,7 @@ class Windy_Gridworld:
 		elif self.currentPos[1] >= self.colsNb: # Outisde from the right
 			self.currentPos[1] = self.colsNb-1 
 
-		print(self.currentPos)
+		#print(self.currentPos)
 
 	def init_Q(self, actionsNb):
 		Q = {}
@@ -108,8 +108,17 @@ class Windy_Gridworld:
 		# Initialize Q(s,a)
 		Q = self.init_Q(8)
 
+		# For the first graph plot
+		episodesRewards = []
+		# For the second graph plot
+		stepsToGoalPerEpisode = []
+
 		for i in range(episodes):
 			grid = Windy_Gridworld() # Init s
+
+			totalReward = 0
+			stepsToGoal = 0
+
 			while(grid.getCurrentPos() != grid.getGoal()):
 				# Chose an action (direction) 
 				currentState = str(grid.getCurrentPos()[0])+","+str(grid.getCurrentPos()[1])
@@ -121,27 +130,136 @@ class Windy_Gridworld:
 
 				# Compute reward
 				reward = 10 if grid.getCurrentPos() == grid.getGoal() else -1
+				totalReward += reward
 
 				# Update Q 
 				nextState = str(grid.getCurrentPos()[0])+","+str(grid.getCurrentPos()[1])
 				Q[currentState][indexActionChosen] = Q[currentState][indexActionChosen] + alpha * (reward + gamma * max(Q[nextState]) - Q[currentState][indexActionChosen])
 
-		return Q
+				stepsToGoal += 1 
 
+			episodesRewards.append(totalReward)
+			stepsToGoalPerEpisode.append(stepsToGoal)
+
+		return Q, episodesRewards, stepsToGoalPerEpisode
+
+	def displayArrows(self, Q):
+		U, V = self.initArrows()
+		X, Y = self.initXY()
+
+		for i in range(self.rowsNb):
+			for j in range(self.colsNb):
+				currentState = str(i)+","+str(j)
+				currentActions = Q.get(currentState)
+				indexOfBestRewardAction = currentActions.index(max(currentActions))
+				current_U, current_V = self.drawArrow(self.actionsIndex[indexOfBestRewardAction])
+				if [i,j] == self.goal:
+					current_U = 0
+					current_V = 0
+				U[i][j] = current_U
+				V[i][j] = current_V
+		
+		plt.quiver(X,Y,U,V, scale=1,  units="xy", color='b', pivot='middle')
+
+	def displayPath(self, Q, epsilon):
+		grid = Windy_Gridworld()
+		U, V = self.initArrows()
+		X, Y = self.initXY()
+
+		while(grid.getCurrentPos() != grid.getGoal()):
+			# Chose action 
+			currentState = str(grid.getCurrentPos()[0])+","+str(grid.getCurrentPos()[1])
+			indexActionChosen = self.choseAction(Q, epsilon, currentState) 
+			actionChosen = self.actionsIndex[indexActionChosen]
+
+			# Draw the arrow correspoding to the action 
+			arrow_U, arrow_V = self.drawArrow(actionChosen)
+			x = grid.getCurrentPos()[0]
+			y = grid.getCurrentPos()[1]
+			U[x][y] = arrow_U
+			V[x][y] = arrow_V
+
+			# Move to the next action
+			grid.move(actionChosen)
+
+		plt.quiver(X,Y,U,V, scale=1,  units="xy", color='r', pivot='mid')
+	
+	def initXY(self):
+		X = np.linspace(0,self.colsNb,self.colsNb)
+		Y = np.linspace(self.rowsNb,0,self.rowsNb)
+		return X,Y
+
+	def initArrows(self):
+		U = [[0 for i in range(self.colsNb)] for j in range(self.rowsNb)]
+		V = [[0 for i in range(self.colsNb)] for j in range(self.rowsNb)]
+		return U, V
+
+	def drawArrow(self, direction):
+		arrowSize = 0.5
+
+		# Manage 8 directions 
+		if direction == "W": 
+			U = -arrowSize 
+			V = 0 
+		elif direction == "NW":
+			U = -arrowSize 
+			V = arrowSize
+		elif direction == "N":
+			U = 0 
+			V = arrowSize 
+		elif direction == "NE": 
+			U = arrowSize
+			V = arrowSize
+		elif direction == "E":
+			U = arrowSize 
+			V = 0
+		elif direction == "SE":
+			U = arrowSize 
+			V = -arrowSize 
+		elif direction == "S":
+			U = 0 
+			V = -arrowSize 
+		elif direction == "SW":
+			U = -arrowSize 
+			V = -arrowSize
+		else: 
+			U = 0 
+			V = 0
+
+		# If arrived to goal
+		if self.currentPos == self.goal:
+			U = 0
+			V = 0
+
+		return U,V
 
 if __name__ == "__main__":
 	myGrid = Windy_Gridworld()
 
-	# Test windy move 
-	myGrid.setCurrentPos([4,5])
-	print("Starting from [4,5], going E, arriving at :")
-	myGrid.move("E")
+	q, totalRewardPerEpisode, stepsToGoalPerEpisode = myGrid.qLearning(gamma=0.9, epsilon=0.2)
 
-	# Test outside move 
-	myGrid.setCurrentPos([0,11])
-	print("Starting from [0,11], going NW, arriving at:")
-	myGrid.move("NW")
+	myGrid.displayArrows(q)
+	myGrid.displayPath(q, 0)
 
-	q = myGrid.qLearning()
-	print(q)
+	plt.xticks(np.arange(0,myGrid.colsNb+1))
+	plt.yticks(np.arange(0,myGrid.rowsNb+1))
+	plt.grid(color='black', linestyle='dotted', linewidth=1)
+
+	plt.title("Windy Gridworld execution")
+
+	plt.show()
+
+	# First graph plot 
+	plt.plot(totalRewardPerEpisode)
+	plt.title("Total collected reward per episode")
+	plt.ylabel("Total reward")
+	plt.xlabel("Episode number")
+	plt.show()
+
+	# Second graph plot
+	plt.plot(stepsToGoalPerEpisode)
+	plt.title("Number of steps to reach the goal")
+	plt.ylabel("Steps")
+	plt.xlabel("Episode number")
+	plt.show()
 

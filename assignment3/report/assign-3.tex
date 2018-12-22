@@ -266,11 +266,196 @@ The \autoref{fig:bandit3-counters} is proving that the exploration is more prese
 \subsection{Conclusion}
 After observing the results with multiple conditions, what we can conclude is that the best results are obtained with an exploration phase. Chosing an action randomly is never a good solution whether the condition. The softmax and $\epsilon$-greedy algorithms are then the best method to adopt. 
 
+\newpage
 
 \section{Second game: Windy Gridworld}
 
+\subsection{Plot of an execution of Windy Gridworld}
+
+\subsection{Best actions and path taken}
+
+An execution of the $Q$-learning algorithm for the Windy Gridworld problem is presented in the \autoref{fig:grid-path}. In the figure, the start point was $(3,0)$ and the goal point is represented by a red point and is $(9,3)$ in this case. Each cell is showing its best action. The red arrows are representing the path taken to reach the goal. In this run, $\alpha = 0.1$, $\gamma = 0.9$ and $\epsilon = 0.2$. The $Q$-values have been computed over 5000 episodes.   
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{fig/grid-path.png}
+  \caption{Execution of Windy Gridworld}
+  \label{fig:grid-path}
+\end{figure}
+
+\subsubsection{Observation} 
+The first observation is that generally all the best actions chosen by each cell is not really accurate, even they are mostly converging to the goal point, we can see that the exploration is kinda weak such that some arrows are completely not pointing the goal even they're beside the goal point. For instance, the arrow left to the goal is pointing to the north while the goal is just one cell to its right. This is explained by the small value chosen for $\epsilon$.   
+
+\subsection{Statistics}
+The two statistics that we are interested of are the total collected reward per episode and the number of steps to reach the goal per episode. The first one is presented in the \autoref{fig:grid-totalReward} and the second one in the \autoref{fig:grid-steps}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{fig/grid-totalReward.png}
+  \caption{Total reward per episode}
+  \label{fig:grid-totalReward}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{fig/grid-steps.png}
+  \caption{Number of steps to reach the goal per episode}
+  \label{fig:grid-steps}
+\end{figure}
+
+\subsubsection{Observation} 
+What we first observe is that the total reward and the number of steps to reach the goal is proportional. Indeed, the first steps are taking a long time to reach the goal (e.g 500 for the first one) and impacts then the total reward because each step is decreasing the reward of 1 while the goal isn't reached (reward is increased by 10 when reached). Nevertheless, the learning done at the beginning seems to be good because after 250-300 episodes the steps number to find the goal is stationary on an average of 15-20 steps.      
+
+\subsection{Question 1: Changing $\epsilon$}
+
+\subsubsection*{Statement}
+\textit{How will the learning process change if we make $\epsilon$ = 0, while keeping the other parameters the same?} 
+
+\subsubsection{Result}
+As saw in the previous game, $\epsilon$ is representing the rate of exploration. By putting $\epsilon$ to zero, we define that no exploration is done, only exploitation which means that from the beginning to the end, the same action is always picked. However, what we can observe from the results shown in \autoref{fig:grid-eps0} is that some exploration are done at the beginning for 400-500 episodes. In fact, what is happening is that the $\epsilon$-greedy algorithm is always taking the maximum value of $Q(s,a)$. As saw before, when the goal isn't reached, the reward will be negative. Thereby, by initializing the $Q$-values to all zeros, the $\epsilon$-greedy algorithm will pick randomly an action which its $Q$-value equals zero. The exploration will end when all the actions have been explored once. At this time, the maximum $Q$-value will be the same for every other rounds.  
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.25]{fig/grid-eps0.png}
+  \caption{Results with $\epsilon = 0$}
+  \label{fig:grid-eps0}
+\end{figure}
+
+\subsection{Question 2: Changing $\gamma$}
+
+\subsubsection*{Statement}
+\textit{How will the learning process change if we make $\gamma$ = 1, while keeping the other parameters the same?} 
+
+\subsubsection{Result}
+$\gamma$ is the discount factor which means that $\gamma$ is valuing rewards received earlier higher than those received later (reflecting the value of a "good start"). By putting $\gamma$ to 1, it means that the future values will have the same impact weight than the first received values. The learning is then taking in account fairly the current and the future values. 
+
+\newpage
 \section{Third game: Graphical Coordination Game}
 
+\subsection{Payoff matrix}
+First of all, let's have a look on the payoff matrix considering 2 and 3 actions. The reward for each player is symmetric. Indeed, an agent is rewarded only if the other player plays the same action than him, otherwise whether the action played, if the other agent plays another action, the payoff of both player will be zero. In other words, the agents have to be coordinated to win. 
+
+\begin{table}[H]
+\begin{minipage}{.5\linewidth}
+\centering
+\begin{tabular}{|c|c|c|}
+  \hline
+  	 \backslashbox[0pt][l]{Agent 1}{Agent 2}       & Action 1 & Action 2 \\
+  \hline
+  	Action 1 & 1 & 0 \\
+  \hline
+  Action 2   & 0 &  1\\
+  \hline
+\end{tabular}
+\end{minipage}
+\begin{minipage}{.5\linewidth}
+\centering
+\begin{tabular}{|c|c|c|c|}
+  \hline
+  	   \backslashbox[0pt][l]{Agent 1}{Agent 2}      & Action 1 & Action 2 & Action 3 \\
+  \hline
+  	Action 1 & 1 & 0 & 0\\
+  \hline
+  Action 2   & 0 &  1 & 0\\
+  \hline
+   Action 3   & 0 &  0 & 1\\
+  \hline
+\end{tabular}
+\end{minipage}
+\caption{Payoff matrices for 2 and 3 actions game}
+\end{table}
+
+\subsection{Convergence time}
+% pour 2: [50000, 8664.92039800995, 4566.87, 3780.26, 2485.685, 2173.13, 2026.595, 2098.34, 2265.085, 3329.99]
+
+% Pour 3: [50000, 11936.940594059406, 5201.59, 3601.425, 3208.995, 2787.81, 2326.38, 2270.1, 2625.88, 3713.315] 
+The average value of the convergence time according to the value of $\alpha$ is given in \autoref{tab:convergence-alpha-2} for 2 actions and \autoref{tab:convergence-alpha-3} for 3 actions. Note that we use arbitrary 50000 as value of $T_{max}$ which means that it never converges when exceeding this threshold value. Thereby, in the \autoref{fig:coord-convergenceAlpha}, an average convergence time of 50000 means a non-converging game for this $\alpha$ value. The \autoref{fig:coord-convergenceAlpha-bis} shows the same graph as \autoref{fig:coord-convergenceAlpha} without the non-converging $\alpha$. 
+
+\vspace{3cm}
+
+\begin{table}[H]
+\begin{minipage}{.5\linewidth}
+\centering
+\begin{tabular}{|c|c|} 
+ \hline
+  $\alpha$ & Convergence time (average) \\
+  \hline
+  0 & Never converge \\
+  0.1 & 8664 \\
+  0.2 & 4566 \\
+  0.3 & 3780 \\
+  0.4 & 2485 \\
+  0.5 & 2173 \\
+  0.6 & 2026 \\
+  0.7 & 2098 \\
+  0.8 & 2265 \\
+  0.9 & 3329 \\
+  1 & Never converge \\
+  \hline
+\end{tabular}
+\caption{Average convergence time for 2 actions} \label{tab:convergence-alpha-2}
+\end{minipage}
+\begin{minipage}{.5\linewidth}
+\centering
+\begin{tabular}{|c|c|} 
+ \hline
+  $\alpha$ & Convergence time (average) \\
+  \hline
+  0 & Never converge \\
+  0.1 & 11936 \\
+  0.2 & 5201 \\
+  0.3 & 3601 \\
+  0.4 & 3208 \\
+  0.5 & 2787 \\
+  0.6 & 2326 \\
+  0.7 & 2270 \\
+  0.8 & 2625 \\
+  0.9 & 3713 \\
+  1 & Never converge \\
+  \hline
+\end{tabular}
+\caption{Average convergence time for 3 actions} \label{tab:convergence-alpha-3}
+\end{minipage}
+\end{table}
 
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.36]{fig/coord-convergenceAlpha.png}
+  \caption{Average convergence time for each $\alpha$ value}
+  \label{fig:coord-convergenceAlpha}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.41]{fig/coord-convergenceAlpha-bis.png}
+  \caption{Average convergence time for converging $\alpha$ value}
+  \label{fig:coord-convergenceAlpha-bis}
+\end{figure}
+
+
+\subsubsection{What is the role of $\alpha$ for the Win-Stay-Lose-probabilistic-Shift algorithm?} 
+
+The $\alpha$ is the lose-probabilistic-shift. The action change depends of this value of $\alpha$. An agent will keep his action with a probability of 1-$\alpha$. A small value of $\alpha$ means that an agent is flexible and will change quite often his action while a large value of $\alpha$ means that the agent will mostly keep playing his action. 
+
+\subsubsection{How is the convergence time affected by the value of $\alpha$?} 
+As \autoref{fig:coord-convergenceAlpha-bis} shows, if $\alpha$? is too small, the agents will really often change their actions in every round which means that the actions of the agents keep changing. Getting coordinated becomes then more difficult. From $\alpha = 0.5$ to $\alpha = 0.8$, it becomes really fast to get the coordinated state (around 2000 rounds).   
+
+\subsubsection{Which $\alpha$ value(s) result in the fastest convergence time for your setting?}
+Generally, the fastest convergence will be between $\alpha = 0.5$ and $\alpha = 0.8$. In this interval, the probability to change action is not to big and not to small. These values are then ideal to get the convergence quickly. 
+
+\subsubsection{For which $\alpha$ values the algorithm fails to converge?}
+It exists 2 values of $\alpha$ which the algorithm will always fail to converge : $\alpha = 0$ and $\alpha = 1$. It is logic because in the first case ($\alpha = 0$), the agents will change their action in every round which means that if their basic configuration isn't respecting the convention, i.e the same action for every agent, it becomes impossible to get this convergence. Same logic for $\alpha = 1$ which means that the agents will never change their action. The only case where it converges is that the random action choice at first round is the same for every agent. At this time, it will converges immediately after 10 iterations. Nevertheless, this case is somehow impossible with that number of agents or really rare. 
+
+\subsubsection{How is the convergence time affected by the number of actions?}
+Obviously, less is the number of actions, less the convergence time will be. It is a simple combinatoric problem which shows that exists more combination with more actions, thus it exists more possibilities when assigning a random action to each agent. Indeed, the numbers of combinations is : 
+
+$$ C_{n}^{k} = {n \choose k} = \frac{n!}{(n-k)! \cdot k!}$$
+ 
+\noindent
+where $n$ is the number of actions and $k$ the number of agents. \\
+
+\noindent
+For 26 agents, it means that for 2 actions, it exists 325 combinations possible for the assignment of actions in the first iterations and 2600 for 3 actions. Thus, this difference is mostly marked for the first iterations but will of course also impact the sequel of iterations. 
+ 
 \end{document}
